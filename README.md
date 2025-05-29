@@ -1,1 +1,1 @@
-# 42-libft
+# 42-student-projects
