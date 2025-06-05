@@ -1,0 +1,25 @@
+The short answer:
+
+    get_next_line can and often does read more than one line at once from the file (because it reads in chunks of size BUFFER_SIZE).
+
+    However, it only returns one line at a time to the caller.
+
+    The leftover data after the first newline is saved internally in the static buffer for the next call.
+    
+In C programming, a static variable is declared using static keyword and have the property of retaining their value between multiple function calls. It is initialized only once and is not destroyed when the function returns a value. It extends the lifetime of the variable till the end of the program.
+
+#include <stdio.h>
+
+// Function with static variable
+int fun(){
+    static int count = 0;
+    count++;
+    return count;
+}
+int main(){
+    printf("%d ", fun());
+    printf("%d ", fun());
+    return 0;
+}
+
+Explanation: The above program prints 1 2 because static variables count is only initialized once. In the first call to fun(), count in increased to 1 which is printed. In the second call, normal local variable would have value 1 as it would have been created and initialized again, but count variable is 2 because it was not destroyed with the function. That is why it was able to retain its value between multiple function calls.
