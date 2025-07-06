@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngungor <ngungor@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nil <nil@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:30:42 by ngungor           #+#    #+#             */
-/*   Updated: 2025/06/04 13:30:44 by ngungor          ###   ########.fr       */
+/*   Updated: 2025/07/07 00:17:56 by nil              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # include <stdint.h>
 
 char		*get_next_line(int fd);
-void		update_leftover_after_newline(char **leftover, int newline_index);
-char		*extract_line(char *leftover, int newline_index);
-int			ft_strchr(const char *s, int c);
+char	*set_line(char *line_buffer);
+char	*fill_line_buffer(int fd, char *leftover, char *buf);
+char			*ft_strchr(const char *s, int c);
 int			ft_strlen(const char *s);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);

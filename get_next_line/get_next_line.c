@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngungor <ngungor@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nil <nil@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:30:11 by ngungor           #+#    #+#             */
-/*   Updated: 2025/06/04 14:02:02 by ngungor          ###   ########.fr       */
+/*   Updated: 2025/07/07 00:20:51 by nil              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,135 +15,92 @@
 char	*get_next_line(int fd)
 {
 	static char	*leftover;
-	int			newline_index;
-	char		*new_line;
-	char		*buf;
-	ssize_t		bytes_read;
-	char		*joined;
+	char	*buf;
+	char	*line;
 
-	buf = malloc(BUFFER_SIZE + 1);
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(leftover);
+		free(buf);
+		leftover = NULL;
+		line = NULL;
+		return (NULL);
+	}
 	if (!buf)
 		return (NULL);
-	new_line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-		free(buf);
+	line = fill_line_buffer(fd, leftover, buf);
+	free(buf);
+	buf = NULL;
+	if (!line)
 		return (NULL);
-	}
-	if (leftover)
+	leftover = set_line(line);
+	return (line);
+}
+char	*set_line(char *line_buffer)
+{
+	char	*leftover;
+	ssize_t	i;
+
+	i = 0;
+	while (line_buffer[i] != '\n' && line_buffer[i] != '\0')
+		i++;
+	if (line_buffer[i] == 0 || line_buffer[1] == 0)
+		return (NULL);
+	leftover = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
+	if (*leftover == 0)
 	{
-		newline_index = ft_strchr(leftover, '\n');
-		if (newline_index >= 0)
-		{
-			new_line = extract_line(leftover, newline_index);
-			update_leftover_after_newline(&leftover, newline_index);
-			free(buf);
-			return (new_line);
-		}
+		free(leftover);
+		leftover = NULL;
 	}
-	while ((bytes_read = read(fd, buf, BUFFER_SIZE)) > 0)
+	line_buffer[i + 1] = 0;
+	return (leftover);
+}
+char	*fill_line_buffer(int fd, char *leftover, char *buf)
+{
+	ssize_t	bytes_read;
+	char	*temp;
+
+	bytes_read = 1;
+	while (bytes_read > 0)
 	{
-		buf[bytes_read] = '\0';
-		joined = ft_strjoin(leftover, buf);
-		if (!joined)
+		bytes_read = read(fd, buf, BUFFER_SIZE);
+		if (bytes_read == -1)
 		{
 			free(leftover);
-			leftover = NULL;
-			free(buf);
 			return (NULL);
 		}
-		free(leftover);
-		leftover = joined;
-		newline_index = ft_strchr(leftover, '\n');
-		if (newline_index >= 0)
-		{
-			new_line = extract_line(leftover, newline_index);
-			update_leftover_after_newline(&leftover, newline_index);
-			free(buf);
-			return (new_line);
-		}
+		else if (bytes_read == 0)
+			break ;
+		buf[bytes_read] = 0;
+		if (!leftover)
+			leftover = ft_strdup("");
+		temp = leftover;
+		leftover = ft_strjoin(temp, buf);
+		free(temp);
+		temp = NULL;
+		if (ft_strchr(buf, '\n'))
+			break ;
 	}
-	if (bytes_read == -1)
-	{
-		free(leftover);
-		leftover = NULL;
-		free(buf);
-		return (NULL);
-	}
-	if (leftover && *leftover)
-	{
-		new_line = ft_strdup(leftover);
-		free(leftover);
-		leftover = NULL;
-		free(buf);
-		return (new_line);
-	}
-	free(buf);
-	return (NULL);
+	return (leftover);
 }
 
-void	update_leftover_after_newline(char **leftover, int newline_index)
+char	*ft_strdup(const char *s)
 {
-	char	*temp;
-	int		leftover_len;
+	char	*p;
+	size_t	i;
+	size_t	size;
 
-	if (!leftover || !*leftover)
-		return ;
-	leftover_len = ft_strlen(*leftover);
-	if (newline_index + 1 >= leftover_len)
-	{
-		free(*leftover);
-		*leftover = NULL;
-		return ;
-	}
-	temp = ft_substr(*leftover, newline_index + 1, leftover_len 
-			- (newline_index + 1));
-	free(*leftover);
-	*leftover = temp;
-}
-
-char	*extract_line(char *leftover, int newline_index)
-{
-	int		i;
-	char	*extracted_line;
-
-	extracted_line = malloc(newline_index + 2);
-	if (!extracted_line)
-		return (NULL);
 	i = 0;
-	while (i < newline_index + 1)
+	size = ft_strlen(s) + 1;
+	p = (char *)malloc(size * sizeof(char));
+	if (!p)
+		return (NULL);
+	while (i < size)
 	{
-		extracted_line[i] = leftover[i];
+		p[i] = s[i];
 		i++;
 	}
-	extracted_line[newline_index + 1] = '\0';
-	return (extracted_line);
+	return (p);
 }
 
-int	ft_strchr(const char *s, int c)
-{
-	int	count;
-
-	count = 0;
-	if (!s)
-		return (-1);
-	while (s[count])
-	{
-		if (s[count] == (unsigned char)c)
-		{
-			return (count);
-		}
-		count++;
-	}
-	return (-1);
-}
-
-int	ft_strlen(const char *s)
-{
-	int	count;
-	
-	count = 0;
-	while (s[count])
-		count++;
-	return (count);
-}
