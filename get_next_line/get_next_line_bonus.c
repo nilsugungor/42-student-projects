@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngungor <ngungor@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 14:00:40 by ngungor           #+#    #+#             */
-/*   Updated: 2025/07/07 14:00:46 by ngungor          ###   ########.fr       */
+/*   Created: 2025/07/08 11:57:38 by ngungor           #+#    #+#             */
+/*   Updated: 2025/07/08 11:58:05 by ngungor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	*leftover;
+	static char	*leftover[MAX_FD];
 	char		*buf;
 	char		*line;
 
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 || fd >= MAX_FD)
 	{
-		free(leftover);
+		free(leftover[fd]);
 		free(buf);
-		leftover = NULL;
+		leftover[fd] = NULL;
 		line = NULL;
 		return (NULL);
 	}
 	if (!buf)
 		return (NULL);
-	line = fill_line_buffer(fd, leftover, buf);
+	line = fill_line_buffer(fd, leftover[fd], buf);
 	free(buf);
 	buf = NULL;
 	if (!line)
 		return (NULL);
-	leftover = set_line(line);
+	leftover[fd] = set_line(line);
 	return (line);
 }
 
