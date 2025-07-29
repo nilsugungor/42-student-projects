@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdlib.h>
-#include <unistd.h>
+
 
 void	push(t_node **top, int value)
 {
