@@ -18,6 +18,9 @@ typedef struct s_node {
 	struct s_node *next;
 } t_node;
 
+t_node	*a = NULL;
+t_node	*b = NULL;
+
 int	is_integer(const char *str);
 int	ft_atoi(const char *str);
 int	*integer_changer(char	**numeros);
