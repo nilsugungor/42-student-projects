@@ -156,7 +156,7 @@ void	rrr(t_node **a, t_node **b)
 	rrb(b);
 }
 
-static int	ft_stacksize(t_node *stack)
+int	ft_stacksize(t_node *stack)
 {
 	int	i;
 
