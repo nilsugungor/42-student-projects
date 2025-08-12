@@ -34,7 +34,7 @@ void	print_list(node_t *head)
 }
 
 //adding an item to the end of the list
-void	push(node_t *head, int val)
+void	push_traditional(node_t *head, int val)
 {
 	node_t *current = head; //initializing a current node to iterate through the list
 				//and putting the first element of the list which is the head
