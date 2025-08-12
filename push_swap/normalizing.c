@@ -61,7 +61,7 @@ int *normalize_array(int arr[], int n) //this function basically gets the array 
     return arr;
 }
 
-void    array_to_stack(t_node **index, int arr[])
+void    array_to_stack(t_node **index, int arr[]) //need to put them in the stack under the index variable somehow? or do a 2d array
 {
     t_node  *current;
 
