@@ -57,7 +57,7 @@ void	pa(t_node **a, t_node **b) //this function is supposed to put the top value
 	*a = temp;
 }
 
-void	pb(t_node **b, t_node **a) //this function is supposed to put the top value of a and put it to the top of b
+void	pb(t_node **a, t_node **b) //this function is supposed to put the top value of a and put it to the top of b
 {
 	t_node	*temp;
 
@@ -128,7 +128,7 @@ void	rra(t_node **a) //shift down all the elements of stack a. last element beco
 	}
 	prev->next = NULL;
 	last->next = *a;
-	last = *a;
+	*a = last;
 }
 
 void	rrb(t_node **b) //shift down all the elements of stack b. last element becomes the first one
@@ -147,7 +147,7 @@ void	rrb(t_node **b) //shift down all the elements of stack b. last element beco
 	}
 	prev->next = NULL;
 	last->next = *b;
-	last = *b;
+	*b = last;
 }
 
 void	rrr(t_node **a, t_node **b)

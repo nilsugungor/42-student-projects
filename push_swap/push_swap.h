@@ -29,7 +29,7 @@ void	push(t_node **top, int value);
 void	sa(t_node **a);
 void	sb(t_node **b);
 void	pa(t_node **a, t_node **b);
-void	pb(t_node **b, t_node **a);
+void	pb(t_node **a, t_node **b);
 void	ra(t_node **a);
 void	rb(t_node **b);
 void	rr(t_node **a, t_node **b);

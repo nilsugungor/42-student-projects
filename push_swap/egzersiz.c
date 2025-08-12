@@ -1,3 +1,5 @@
+#include "push_swap.h"
+
 typedef struct node {
 	int	val;
 	struct node *next;
@@ -170,8 +172,6 @@ int	remove_by_value(node_t **head, int value)
 	free(temp);
 	return (retval);
 }
-
-
 
 
 
