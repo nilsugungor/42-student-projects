@@ -35,37 +35,105 @@ int *copy_list_to_array(t_node **a) //this function gets the nodes from the stac
     return (normalize);
 }
 
-int *normalize_array(int arr[], int n) //this function basically gets the array from the previous function and normalizes it in the range of 0 and n - 1
+void    swap(int *a, int *b)
 {
-    int min;
-    int max;
-    int i;
+    int temp;
 
-    min = arr[0];
-    max = arr[0];
-    i = 0;
-    while (i < n)
-    {
-        if (arr[i] < min)
-            min = arr[i];
-        if (arr[i] > max)
-            max = arr[i];
-        i++;
-    }
-    i = 0;
-    while (i < n)
-    {
-        arr[i] = (arr[i] - min) * (n - 1) / (max - min);
-        i++;
-    }
-    return arr;
+    temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-void    array_to_stack(t_node **index, int arr[]) //need to put them in the stack under the index variable somehow? or do a 2d array
+void    heapify(int normalize[], int n, int root_index)
+{
+    int largest;
+    int left;
+    int right;
+
+    largest = root_index;
+    left = 2 * root_index + 1;
+    right = 2 * root_index + 2;
+
+    if (left < n && normalize[left] > normalize[largest])
+        largest = left;
+    if (right < n && normalize[right] > normalize[largest])
+        largest = right;
+    if (largest != root_index)
+    {
+        swap(&normalize[root_index], &normalize[largest]);
+        heapify(normalize, n, largest);
+    }
+}
+
+int    *heap_sort(int normalize[], int n)
+{
+    int root_index;
+    int i;
+    int *sorted;
+
+    sorted = (int *)malloc(sizeof(int) * n);
+    if (!sorted)
+        return (NULL);
+    i = 0;
+    root_index = n / 2 - 1;
+    while (i < n)
+    {
+        sorted[i] = normalize[i];
+        i++;
+    }
+    while (root_index >= 0)
+    {
+        heapify(sorted, n, root_index);
+        root_index--;
+    }
+    root_index = n - 1;
+    while (root_index-- > 0)
+    {
+        swap(&sorted[0], &sorted[root_index]);
+        heapify(sorted, root_index, 0);
+    }
+    return (sorted);
+}
+
+int     binary_search(int n, int target, int *normalize)
+{
+    int mid;
+    int left;
+    int right;
+
+    left = 0;
+    right = n - 1;
+    while (left <= right)
+    {
+        mid = left + (right - left) / 2;
+        if (normalize[mid] == target)
+            return (mid);
+        else if (normalize[mid] < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return (-1);
+}
+
+int *binary_search_write(int target)
+{
+
+}
+
+void    array_to_stack(t_node **a, int *normalize) //need to put them in the stack under the index variable somehow? or do a 2d array
 {
     t_node  *current;
+    int i;
 
-
+    current = *a;
+    i = 0;
+    while (current)
+    {
+        current->index = normalize[i];
+        i++;
+        current = current->next;
+    }
 }
 
 int count_bits(int n) //you have to pass the max element to this function and check how many bits we have to check for radix sort
@@ -81,95 +149,4 @@ int count_bits(int n) //you have to pass the max element to this function and ch
     }
     return (count);
 }
-
-
-
-
-//HEAPSORT
-// void    swap(int *a, int *b)
-// {
-//     int temp;
-
-//     temp = *a;
-//     *a = *b;
-//     *b = temp;
-// }
-
-// void    heapify(int normalize[], int n, int i)
-// {
-//     int largest;
-//     int left;
-//     int right;
-
-//     largest = i;
-//     left = 2 * i + 1;
-//     right = 2 * i + 2;
-
-//     if (left < n && normalize[left] > normalize[largest])
-//         largest = left;
-//     if (right < n && normalize[right] > normalize[largest])
-//         largest = right;
-//     if (largest != i)
-//     {
-//         swap(&normalize[i], &normalize[largest]);
-//         heapify(normalize, n, largest);
-//     }
-// }
-
-// int    *heap_sort(int normalize[], int n)
-// {
-//     int i;
-
-//     i = n / 2 - 1;
-//     while (i >= 0)
-//         heapify(normalize, n, i);
-//     i = n - 1;
-//     while (i--)
-//     {
-//         swap(&normalize[0], &normalize[i]);
-//         heapify(normalize, i, 0);
-//     }
-//     return (normalize);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
