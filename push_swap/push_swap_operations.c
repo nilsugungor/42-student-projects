@@ -12,17 +12,6 @@
 
 #include "push_swap.h"
 
-void	push(t_node **stack, int value)
-{
-	t_node *new_node;
-	new_node = (t_node *)malloc(sizeof(t_node));
-	if (!new_node)
-		return ;
-	new_node->data = value;
-	new_node->next = *stack;
-	*stack = new_node;
-}
-
 void	sa(t_node **a) // swap the first two nodes at the top of the stack a
 {
 	int	temp;
@@ -85,86 +74,4 @@ void	ra(t_node **a) //shift up all the elements of stack a by one. the first nod
 	*a = first->next;
 	first->next = NULL;
 	last->next = first;
-}
-
-
-void	rb(t_node **b) //shift up all the elements of stack b by one. the first node becomes the last
-{
-	if (!b || !(*b) || !((*b)->next)) // if you pass an invalid pointer, or the stack is empty, or there is only one element in the stack therefore nothing to rotate
-		return ;
-	t_node	*first;
-	t_node	*last;
-
-	first = *b;
-	last = *b;
-
-	while (last->next)
-		last = last->next;
-
-	*b = first->next;
-	first->next = NULL;
-	last->next = first;
-}
-
-void	rr(t_node **a, t_node **b)
-{
-	rb(b);
-	ra(a);
-}
-
-void	rra(t_node **a) //shift down all the elements of stack a. last element becomes the first one
-{
-	t_node	*prev;
-	t_node	*last;
-
-	if (!a || !(*a) || !((*a)->next))
-		return ;
-	prev = NULL;
-	last = *a;
-	while (last->next)
-	{
-		prev = last;
-		last = last->next;
-	}
-	prev->next = NULL;
-	last->next = *a;
-	*a = last;
-}
-
-void	rrb(t_node **b) //shift down all the elements of stack b. last element becomes the first one
-{
-	t_node	*prev;
-	t_node	*last;
-
-	if (!b || !(*b) || !((*b)->next))
-		return ;
-	prev = NULL;
-	last = *b;
-	while (last->next)
-	{
-		prev = last;
-		last = last->next;
-	}
-	prev->next = NULL;
-	last->next = *b;
-	*b = last;
-}
-
-void	rrr(t_node **a, t_node **b)
-{
-	rra(a);
-	rrb(b);
-}
-
-int	ft_stacksize(t_node *stack)
-{
-	int	i;
-
-	i = 0;
-	while (stack)
-	{
-		i++;
-		stack = stack->next;
-	}
-	return (i);
 }

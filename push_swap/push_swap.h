@@ -16,7 +16,6 @@
 typedef struct s_node {
 	int	data;
 	int	index;
-	int	length;
 	struct s_node *next;
 } t_node;
 
@@ -27,6 +26,7 @@ int	is_integer(const char *str);
 int	ft_atoi(const char *str);
 int	*integer_changer(char	**numeros);
 int	ft_stacksize(t_node *stack);
+char	**ft_split(char const *s, char c);
 void	push(t_node **top, int value);
 void	sa(t_node **a);
 void	sb(t_node **b);

@@ -2,7 +2,7 @@
 
 void    sort_3(t_node **a)
 {
-    if (!a || !(*a) || !(*a)->next->next)
+    if (!a || !(*a) || !(*a)->next->next || !(*a)->next)
         return ;
     if ((*a)->data > (*a)->next->data)
         sa(a);
@@ -23,7 +23,7 @@ void	insert_by_value(t_node **a, t_node **b)
 
 	count = 0;
     i = 0;
-    if (!(*b))
+    if (!(*b) || !b || !a)
         return ;
 	if (!(*a) || (*a)->data > (*b)->data)
         return ((void)pa(a, b));
