@@ -25,49 +25,75 @@ void	push(t_node **top, int value)
 	new_node->next = *top;
 	*top = new_node;
 }
-
-int	main(int argc, char **argv)
+void check_valid_numbers(char **numbers)
 {
-	char	**numeros;
-	int	i;
-	int	j;
-
-	i = 1;
-	if (argc == 2)
-		numeros = ft_split(argv[1], " ");
-
-	if (argc > 2)
+	int i = 0;
+	int j;
+	while (numbers[i])
 	{
-		while (i < argc - 1)
+		if (!is_integer(numbers[i]))
+			print_error_and_exit();
+		j = i + 1;
+		while (numbers[j])
 		{
-			j = i + 1;
-			while (j < argc)
-			{
-				if (argv[i] == argv[j])
-				{
-					write(1, "Error\n", 6);
-					exit(EXIT_FAILURE);
-				}
-				j++;
-			}
-			if (!is_integer(argv[i]))
-			{
-				write(1, "Error\n", 6);
-				exit(EXIT_FAILURE);
-			}
-			i++;
+			if (ft_strcmp(numbers[i], numbers[j]) == 0)
+				print_error_and_exit();
+			j++;
 		}
+		i++;
 	}
 }
-int	*integer_changer(char	**numeros)
+int	main(int argc, char **argv)
+{
+	char	**numbers;
+	int	i;
+	t_node *a;
+
+	a = NULL;
+	i = 0;
+	if (argc < 2)
+		print_error_and_exit();
+	if (argc == 2)
+		numbers = ft_split(argv[1], " ");
+	else
+		numbers = argv + 1;
+	check_valid_numbers(numbers);
+	push_a(&a, ft_atoi(numbers[0]));
+	i = 1;
+	while (numbers[i++])
+		push_a(&a, ft_atoi(numbers[i]));
+	while (b)
+		push_a(&a, pop(&b));
+	if (argc == 2)
+		free_split(numbers);
+	return (0);
+}
+void	free_split(char **arr)
+{
+	int i = 0;
+	if (!arr)
+		return;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+void	print_error_and_exit(void)
+{
+	write(2, "Error\n", 6);
+	exit(EXIT_FAILURE);
+}
+int	*integer_changer(char	**numbers)
 {
 	int	i;
 	int	length;
 	i = 0;
-	length = ft_strlen(numeros);
+	length = ft_strlen(numbers);
 	while (i < length)
 	{
-		numeros[i];
+		numbers[i];
 	}
 
 }

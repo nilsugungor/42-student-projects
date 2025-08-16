@@ -27,7 +27,7 @@ int	ft_atoi(const char *str);
 int	*integer_changer(char	**numeros);
 int	ft_stacksize(t_node *stack);
 char	**ft_split(char const *s, char c);
-void	push(t_node **top, int value);
+void	push_a(t_node **a, int value);
 void	sa(t_node **a);
 void	sb(t_node **b);
 void	pa(t_node **a, t_node **b);
