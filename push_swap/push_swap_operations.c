@@ -21,6 +21,7 @@ void	sa(t_node **a) // swap the first two nodes at the top of the stack a
 	temp = (*a)->data;
 	(*a)->data = (*a)->next->data;
 	(*a)->next->data = temp;
+	write(1, "sa\n", 3);
 }
 
 void	sb(t_node **b) // swap the first two nodes at the top of the stack b
@@ -31,7 +32,8 @@ void	sb(t_node **b) // swap the first two nodes at the top of the stack b
 		return ;
 	temp = (*b)->data;
 	(*b)->data = (*b)->next->data;
-	(*b)->next->data = temp;	
+	(*b)->next->data = temp;
+	write(1, "sb\n", 3);	
 }
 
 void	pa(t_node **a, t_node **b) //this function is supposed to put the top value of b and put it to the top of a
@@ -44,6 +46,7 @@ void	pa(t_node **a, t_node **b) //this function is supposed to put the top value
 	*b = (*b)->next;
 	temp->next = *a;
 	*a = temp;
+	write(1, "pa\n", 3);
 }
 
 void	pb(t_node **a, t_node **b) //this function is supposed to put the top value of a and put it to the top of b
@@ -56,6 +59,7 @@ void	pb(t_node **a, t_node **b) //this function is supposed to put the top value
 	*a = (*a)->next;
 	temp->next = *b;
 	*b = temp;
+	write(1, "pb\n", 3);
 }
 
 void	ra(t_node **a) //shift up all the elements of stack a by one. the first node becomes the last
@@ -74,4 +78,5 @@ void	ra(t_node **a) //shift up all the elements of stack a by one. the first nod
 	*a = first->next;
 	first->next = NULL;
 	last->next = first;
+	write(1, "ra\n", 3);
 }

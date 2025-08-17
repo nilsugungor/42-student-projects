@@ -12,58 +12,75 @@
 
 #include "push_swap.h"
 
+void	choose_sorting_algorithm(t_node **a, t_node **b)
+{
+	int	length;
 
-void	push(t_node **top, int value)
-{
-	t_node *new_node = malloc(sizeof(t_node));
-	if (!new_node)
-	{
-		new_node = NULL;
+	length = ft_stacksize(*a);
+	if (length == 1)
 		return ;
-	}
-	new_node->data = value;
-	new_node->next = *top;
-	*top = new_node;
+	else if (length == 2)
+		sort_2(a);
+	else if (length == 3)
+		sort_3(a);
+	else if (length == 4 || length == 5)
+		sort_5(a, b);
+	else
+		normalize_and_sort(a, b);
 }
-void check_valid_numbers(char **numbers)
+int	count_args(char **args)
 {
-	int i = 0;
-	int j;
-	while (numbers[i])
-	{
-		if (!is_integer(numbers[i]))
-			print_error_and_exit();
-		j = i + 1;
-		while (numbers[j])
-		{
-			if (ft_strcmp(numbers[i], numbers[j]) == 0)
-				print_error_and_exit();
-			j++;
-		}
+	int	i;
+
+	i = 0;
+	while (args[i])
 		i++;
+	return (i);
+}
+void	fill_stack(t_node **a, char **numbers)
+{
+	int	i;
+	int	n;
+	int	count;
+
+	count = count_args(numbers);
+	i = count - 1;
+	while (i >= 0)
+	{
+		if (!ft_atoi_strict(numbers[i], &n))
+			print_error_and_exit();
+		push_a(a, n);
+		i--;
 	}
+}
+
+char	**parse_args(int argc, char **argv)
+{
+	if (argc == 2)
+		return (ft_split(argv[1], ' '));
+	else
+		return (argv + 1);
 }
 int	main(int argc, char **argv)
 {
 	char	**numbers;
-	int	i;
-	t_node *a;
-
-	a = NULL;
-	i = 0;
+	t_node	*a = NULL;
+	t_node	*b = NULL;
 	if (argc < 2)
 		print_error_and_exit();
-	if (argc == 2)
-		numbers = ft_split(argv[1], " ");
-	else
-		numbers = argv + 1;
+	numbers = parse_args(argc, argv);
 	check_valid_numbers(numbers);
-	push_a(&a, ft_atoi(numbers[0]));
-	i = 1;
-	while (numbers[i++])
-		push_a(&a, ft_atoi(numbers[i]));
-	while (b)
-		push_a(&a, pop(&b));
+	fill_stack(&a, numbers);
+	if (is_sorted(a))
+	{
+		free_stack(&a);
+		if (argc == 2)
+			free_split(numbers);
+		return (0);
+	}
+	choose_sorting_algorithm(&a, &b);
+	free_stack(&a);
+	free_stack(&b);
 	if (argc == 2)
 		free_split(numbers);
 	return (0);
@@ -85,61 +102,84 @@ void	print_error_and_exit(void)
 	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 }
-int	*integer_changer(char	**numbers)
+int	ft_atoi_strict(const char *str, int *out)
 {
-	int	i;
-	int	length;
-	i = 0;
-	length = ft_strlen(numbers);
-	while (i < length)
-	{
-		numbers[i];
-	}
+	long	result = 0;
+	int		sign = 1;
 
-}
-int	ft_atoi(const char *str)
-{
-	int	sign;
-	int	result;
-
-	sign = 1;
-	result = 0;
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
-	{
 		str++;
-	}
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
 			sign = -1;
 		str++;
 	}
-	while (*str <= '9' && *str >= '0')
-	{
-		result = (result * 10) + *str - 48;
-		str++;
-	}
-	return (result * sign);
-}
-
-int	is_integer(const char *str)
-{
-	if (*str == '+' || *str == '-')
-		str++;
-	if (*str == '\0')
+	if (!*str)
 		return (0);
 	while (*str)
 	{
 		if (!ft_isdigit(*str))
 			return (0);
+		result = result * 10 + (*str - '0');
+		if ((sign == 1 && result > INT_MAX) || (sign == -1 && -result < INT_MIN))
+			return (0);
+		str++;
+	}
+	*out = (int)(sign * result);
+	return (1);
+}
+//if the string is empy or no arguments psuh swap displays npothing
+void	check_valid_numbers(char **numbers)
+{
+	int	i;
+	int	n;
+	int	count;
+	int *values;
+
+	i = 0;
+	count = 0;
+	while (numbers[count])
+		count++;
+	values = malloc(sizeof(int) * count);
+	if (!values)
+		print_error_and_exit();
+	while (i < count)
+	{
+		if (is_empty_or_whitespace(numbers[i]))
+			print_error_and_exit();
+		if (!ft_atoi_strict(numbers[i], &n))
+			print_error_and_exit();
+		if (has_duplicate(values, i, n))
+			print_error_and_exit();
+		values[i] = n;
+		i++;
+	}
+	free(values);
+}
+int	has_duplicate(int *values, int size, int n)
+{
+	int	j;
+
+	j = 0;
+	while (j < size)
+	{
+		if (values[j] == n)
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
+int	is_empty_or_whitespace(const char *str)
+{
+	while (*str)
+	{
+		if (!(*str == ' ' || (*str >= 9 && *str <= 13)))
+			return (0);
 		str++;
 	}
 	return (1);
 }
-
-
-
-
-
 
 

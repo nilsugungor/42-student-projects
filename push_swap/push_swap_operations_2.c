@@ -16,12 +16,14 @@ void	rb(t_node **b) //shift up all the elements of stack b by one. the first nod
 	*b = first->next;
 	first->next = NULL;
 	last->next = first;
+	write(1, "rb\n", 3);
 }
 
 void	rr(t_node **a, t_node **b)
 {
 	rb(b);
 	ra(a);
+	write(1, "rr\n", 3);
 }
 
 void	rra(t_node **a) //shift down all the elements of stack a. last element becomes the first one
@@ -41,6 +43,7 @@ void	rra(t_node **a) //shift down all the elements of stack a. last element beco
 	prev->next = NULL;
 	last->next = *a;
 	*a = last;
+	write(1, "rra\n", 4);
 }
 
 void	rrb(t_node **b) //shift down all the elements of stack b. last element becomes the first one
@@ -60,10 +63,12 @@ void	rrb(t_node **b) //shift down all the elements of stack b. last element beco
 	prev->next = NULL;
 	last->next = *b;
 	*b = last;
+	write(1, "rrb\n", 4);
 }
 
 void	rrr(t_node **a, t_node **b)
 {
 	rra(a);
 	rrb(b);
+	write(1, "rrr\n", 4);
 }
