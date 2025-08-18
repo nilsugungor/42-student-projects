@@ -29,3 +29,7 @@ for args in \
   ./push_swap $args
   echo "-----"
 done
+
+#to test the requirements for the project validation also with the memory leaks, without it just delete valgrind and also change the range after seq + amount after the shuffle
+#ARG=$(seq -1000 1000 | shuf -n 100 | tr '\n' ' ')
+#valgrind ./push_swap $ARG | wc -l

@@ -11,7 +11,9 @@ SRC = push_swap.c \
       normalizing.c \
       radix_sort.c \
       helper.c \
-      ft_split.c
+      ft_split.c \
+	  push_swap_2.c \
+	  push_swap_3.c
 
 OBJ = $(SRC:.c=.o)
 

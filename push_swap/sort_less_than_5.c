@@ -18,8 +18,8 @@ void	sort_3(t_node **a)
 void	insert_by_value(t_node **a, t_node **b)
 {
 	t_node	*current;
-	int	count;
-	int	i;
+	int		count;
+	int		i;
 
 	count = 0;
 	i = 0;
@@ -44,7 +44,7 @@ void	insert_by_value(t_node **a, t_node **b)
 
 void	sort_5(t_node **a, t_node **b)
 {
-	int length;
+	int	length;
 
 	length = ft_stacksize(*a);
 	if (length == 5)
@@ -62,6 +62,7 @@ void	sort_5(t_node **a, t_node **b)
 		insert_by_value(a, b);
 	}
 }
+
 void	sort_2(t_node **a)
 {
 	if ((*a)->data > (*a)->next->data)
