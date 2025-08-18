@@ -1,18 +1,16 @@
 #include "push_swap.h"
 
-void	rb(t_node **b) //shift up all the elements of stack b by one. the first node becomes the last
+void	rb(t_node **b)
 {
-	if (!b || !(*b) || !((*b)->next)) // if you pass an invalid pointer, or the stack is empty, or there is only one element in the stack therefore nothing to rotate
-		return ;
 	t_node	*first;
 	t_node	*last;
 
+	if (!b || !(*b) || !((*b)->next))
+		return ;
 	first = *b;
 	last = *b;
-
 	while (last->next)
 		last = last->next;
-
 	*b = first->next;
 	first->next = NULL;
 	last->next = first;
@@ -26,7 +24,7 @@ void	rr(t_node **a, t_node **b)
 	write(1, "rr\n", 3);
 }
 
-void	rra(t_node **a) //shift down all the elements of stack a. last element becomes the first one
+void	rra(t_node **a)
 {
 	t_node	*prev;
 	t_node	*last;
@@ -46,7 +44,7 @@ void	rra(t_node **a) //shift down all the elements of stack a. last element beco
 	write(1, "rra\n", 4);
 }
 
-void	rrb(t_node **b) //shift down all the elements of stack b. last element becomes the first one
+void	rrb(t_node **b)
 {
 	t_node	*prev;
 	t_node	*last;

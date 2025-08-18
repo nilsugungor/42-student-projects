@@ -15,12 +15,12 @@ void	normalize_and_sort(t_node **a, t_node **b)
 	radix_sort(a, b);
 }
 
-int *copy_list_into_array(t_node **a)
+int	*copy_list_into_array(t_node **a)
 {
-	t_node *current;
-	int length;
-	int *arr;
-	int i;
+	t_node	*current;
+	int		length;
+	int		*arr;
+	int		i;
 
 	if (!a || !(*a))
 		return (NULL);
@@ -49,8 +49,8 @@ void	heapify(int *arr, int n, int i)
 	int	temp;
 
 	largest = i;
-	left = 2*i + 1;
-	right = 2*i + 2;
+	left = (2 * i) + 1;
+	right = (2 * i) + 2;
 	if (left < n && arr[left] > arr[largest])
 		largest = left;
 	if (right < n && arr[right] > arr[largest])
@@ -87,9 +87,10 @@ void	heap_sort(int *arr, int n)
 		i--;
 	}
 }
-int	count_bits(int n) //you have to pass the max element to this function and check how many bits we have to check for radix sort
+
+int	count_bits(int n)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (n > 0)
@@ -101,4 +102,3 @@ int	count_bits(int n) //you have to pass the max element to this function and ch
 		count = 1;
 	return (count);
 }
-

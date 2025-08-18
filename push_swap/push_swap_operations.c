@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	sa(t_node **a) // swap the first two nodes at the top of the stack a
+void	sa(t_node **a)
 {
 	int	temp;
 
@@ -24,7 +24,7 @@ void	sa(t_node **a) // swap the first two nodes at the top of the stack a
 	write(1, "sa\n", 3);
 }
 
-void	sb(t_node **b) // swap the first two nodes at the top of the stack b
+void	sb(t_node **b)
 {
 	int	temp;
 
@@ -33,10 +33,10 @@ void	sb(t_node **b) // swap the first two nodes at the top of the stack b
 	temp = (*b)->data;
 	(*b)->data = (*b)->next->data;
 	(*b)->next->data = temp;
-	write(1, "sb\n", 3);	
+	write(1, "sb\n", 3);
 }
 
-void	pa(t_node **a, t_node **b) //this function is supposed to put the top value of b and put it to the top of a
+void	pa(t_node **a, t_node **b)
 {
 	t_node	*temp;
 
@@ -49,7 +49,7 @@ void	pa(t_node **a, t_node **b) //this function is supposed to put the top value
 	write(1, "pa\n", 3);
 }
 
-void	pb(t_node **a, t_node **b) //this function is supposed to put the top value of a and put it to the top of b
+void	pb(t_node **a, t_node **b)
 {
 	t_node	*temp;
 
@@ -62,19 +62,17 @@ void	pb(t_node **a, t_node **b) //this function is supposed to put the top value
 	write(1, "pb\n", 3);
 }
 
-void	ra(t_node **a) //shift up all the elements of stack a by one. the first node becomes the last
+void	ra(t_node **a)
 {
-	if (!a || !(*a) || !((*a)->next)) // if you pass an invalid pointer, or the stack is empty, or there is only one element in the stack therefore nothing to rotate
-		return ;
 	t_node	*first;
 	t_node	*last;
 
+	if (!a || !(*a) || !((*a)->next))
+		return ;
 	first = *a;
 	last = *a;
-
 	while (last->next)
 		last = last->next;
-
 	*a = first->next;
 	first->next = NULL;
 	last->next = first;

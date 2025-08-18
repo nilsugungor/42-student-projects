@@ -28,6 +28,8 @@ void	insert_by_value(t_node **a, t_node **b)
 	if (!(*a) || (*a)->data > (*b)->data)
 		return ((void)pa(a, b));
 	current = *a;
+	if (current->data >= (*b)->data)
+		pa(a, b);
 	while (current->next && current->next->data <= (*b)->data)
 	{
 		current = current->next;

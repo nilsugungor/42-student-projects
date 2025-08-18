@@ -12,7 +12,8 @@ int	ft_stacksize(t_node *stack)
 	}
 	return (i);
 }
-int is_sorted(t_node *a)
+
+int	is_sorted(t_node *a)
 {
 	if (!a || !(a->next))
 		return (1);
@@ -24,9 +25,11 @@ int is_sorted(t_node *a)
 	}
 	return (1);
 }
+
 void	free_stack(t_node **stack)
 {
 	t_node	*temp;
+
 	if (!stack)
 		return ;
 	while (*stack)
@@ -36,6 +39,7 @@ void	free_stack(t_node **stack)
 		*stack = temp;
 	}
 }
+
 int	ft_isdigit(int c)
 {
 	if (c <= '9' && c >= '0')
