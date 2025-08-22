@@ -21,6 +21,10 @@ typedef struct s_node
 {
 	int				data;
 	int				index;
+	int				position;
+	int				target_pos;
+	int				cost_a;
+	int				cost_b;
 	struct s_node	*next;
 }	t_node;
 
@@ -39,10 +43,6 @@ void	choose_sorting_algorithm(t_node **a, t_node **b);
 void	sort_2(t_node **a);
 void	sort_3(t_node **a);
 void	sort_5(t_node **a, t_node **b);
-void	normalize_and_sort(t_node **a, t_node **b);
-void	radix_sort(t_node **a, t_node **b);
-void	assign_index(t_node *a, int *sorted_array, int size);
-void	insert_by_value(t_node **a, t_node **b);
 int		ft_stacksize(t_node *stack);
 int		is_sorted(t_node *a);
 void	free_stack(t_node **stack);
@@ -61,9 +61,5 @@ char	**ft_split(char const *s, char c);
 void	free_split(char **arr);
 void	print_error(char **numbers, t_node **a,
 			t_node **b, int need_free_split);
-int		*copy_list_into_array(t_node **a);
-void	heap_sort(int *arr, int n);
-void	heapify(int *arr, int n, int i);
-int		count_bits(int n);
 
 #endif
