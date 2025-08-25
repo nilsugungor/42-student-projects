@@ -17,7 +17,7 @@ void	push_all_except_three(t_node **a, t_node **b)
 	int	i;
 	i = 0;
 	length = ft_stacksize(*a);
-	if (length > 6)
+	if (length >= 6)
 	{
 		while (i < (length - 3))
 		{
@@ -30,4 +30,31 @@ void	push_all_except_three(t_node **a, t_node **b)
 int	find_the_cheapest_move(t_node **a, t_node **b)
 {
 
+}
+int	find_target_node(t_node *a, t_node *b)
+{
+	int	min_distance;
+	int	distance;
+	int	target_pos;
+	int	best_pos; 
+	t_node	*current_b;
+
+	current_b = b;
+	best_pos = 0;
+	target_pos = 0;
+	min_distance = INT_MAX;
+	while (current_b)
+	{
+		if (distance > 0 && distance < min_distance)
+		{
+			distance = a->data - current_b->data;
+			min_distance = distance;
+			best_pos = target_pos;
+		}
+		current_b = current_b->next;
+		target_pos++;
+	}
+	if (min_distance == INT_MAX)
+		best_pos = find_max_index(b);
+	return (best_pos);
 }
